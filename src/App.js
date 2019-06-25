@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import TodoList from './TodoList';
 
 import './App.css';
+import TodoItems from './TodoItems';
 
 class App extends Component {
   constructor() {
@@ -19,7 +20,6 @@ class App extends Component {
   }
 
   handleInput = e => {
-    console.log('Hello input')
     const itemText= e.target.value
     const currentItem = { text: itemText, key: Date.now() }
     this.setState({
@@ -31,7 +31,7 @@ class App extends Component {
     e.preventDefault()
     const newItem = this.state.currentItem
     if( newItem.text !== '') {
-      console.log(`Add new task: ${newItem}`)
+      console.log(`Add new task: ${newItem.text}`)
       const items = [...this.state.items, newItem]
       this.setState({
         items: items,
@@ -42,6 +42,15 @@ class App extends Component {
     }
   }
 
+  deleteItem = key => {
+    const filteredItems = this.state.items.filter(item => {
+      return item.key !== key
+    })
+    this.setState({
+      items: filteredItems,
+    })
+  }
+
   render() {
     return (
       <div className="App">
@@ -50,7 +59,12 @@ class App extends Component {
           inputElement={this.inputElement}
           handleInput={this.handleInput}
           currentItem={this.state.currentItem} 
-          />
+        />
+        
+        <TodoItems 
+          entries={this.state.items}
+          deleteItem={this.deleteItem}
+        />
       </div>
     )
   }
