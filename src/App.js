@@ -7,7 +7,7 @@
 import React, { Component } from 'react';
 import TodoList from './TodoList';
 
-import './App.css';
+import './App.scss';
 import TodoItems from './TodoItems';
 
 class App extends Component {
