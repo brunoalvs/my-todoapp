@@ -1,26 +1,73 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+//TODO:
+// Here's what we'll be doing now:
+// - Adding items
+// - Displaying items
+// - Removing items
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { Component } from 'react';
+import TodoList from './TodoList';
+
+import './App.scss';
+import TodoItems from './TodoItems';
+
+class App extends Component {
+  constructor() {
+    super()
+    this.state = {
+      items: [],
+      currentItem: {text:'', key:''},
+    }
+  }
+
+  handleInput = e => {
+    const itemText= e.target.value
+    const currentItem = { text: itemText, key: Date.now() }
+    this.setState({
+      currentItem,
+    })
+  }
+
+  addItem = (e) => {
+    e.preventDefault()
+    const newItem = this.state.currentItem
+    if( newItem.text !== '') {
+      console.log(`Add new task: ${newItem.text}`)
+      const items = [...this.state.items, newItem]
+      this.setState({
+        items: items,
+        currentItem: { text: '', key: ''},
+      })
+    } else {
+      console.log('input empty')
+    }
+  }
+
+  deleteItem = key => {
+    const filteredItems = this.state.items.filter(item => {
+      return item.key !== key
+    })
+    this.setState({
+      items: filteredItems,
+    })
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <TodoList 
+          addItem={this.addItem}
+          inputElement={this.inputElement}
+          handleInput={this.handleInput}
+          currentItem={this.state.currentItem} 
+        />
+        
+        <TodoItems 
+          entries={this.state.items}
+          deleteItem={this.deleteItem}
+        />
+      </div>
+    )
+  }
 }
 
-export default App;
+export default App
