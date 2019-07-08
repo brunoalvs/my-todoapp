@@ -5,10 +5,10 @@
 // - Removing items
 
 import React, { Component } from 'react';
-import TodoList from './TodoList';
+import TodoList from '../TodoList/TodoList';
 
 import './App.scss';
-import TodoItems from './TodoItems';
+import TodoItems from '../TodoItems/TodoItems';
 
 class App extends Component {
   constructor() {

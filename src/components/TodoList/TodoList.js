@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './sass/components/TodoList.scss'
+import './TodoList.scss'
 
 class TodoList extends Component {
   render() {
